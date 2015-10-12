@@ -2,26 +2,28 @@ var hours = process.argv[2];
 var minutes = process.argv[3];
 var arab = [1, 4, 5, 9, 10, 40, 50];
 var roman = ["I", "IV", "V", "IX", "X", "XL", "L"];
-var rezult = "";
+var result = "";
 if (hours > 23 || minutes > 59 || hours < 0 || minutes < 0) {
     process.stdout.write("Время указано не верно");
     return;
 };
-var n = arab.length - 1;
-while (hours > 0) {
-    if (hours >= arab[n]) {
-        rezult += roman[n];
-        hours -= arab[n];
-    }
-    else n--;
+if(hours == 0 && minutes == 0){
+    process.stdout.write('---');
+    return;
 }
-rezult += ":";
 var n = arab.length - 1;
-while (minutes > 0) {
-    if (minutes >= arab[n]) {
-        rezult += roman[n];
-        minutes -= arab[n];
+function f (number){
+    while (number > 0) {
+        if (number >= arab[n]) {
+            result += roman[n];
+            number -= arab[n];
+        } else {
+            n--;
+        }
     }
-    else n--;
 }
-process.stdout.write(rezult);
+f(hours);
+result += ":";
+var n = arab.length - 1;
+f(minutes);
+process.stdout.write(result);
